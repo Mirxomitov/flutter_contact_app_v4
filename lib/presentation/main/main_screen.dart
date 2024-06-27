@@ -117,13 +117,8 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
             );
-          } else if (state is MainStateError) {
-            return Center(
-              child: Text(state.message),
-            );
-          } else {
-            return const Center();
           }
+          return const Center();
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
@@ -166,7 +161,9 @@ class _MainScreenState extends State<MainScreen> {
       context,
       MaterialPageRoute(builder: (context) => const AddScreen()),
     );
+
     if (result != null && result) {
+      print('Muhriddin');
       BlocProvider.of<MainBloc>(context).add(LoadContactsEvent());
     }
   }

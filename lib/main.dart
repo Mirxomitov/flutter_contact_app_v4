@@ -30,7 +30,6 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         useMaterial3: true,
         textTheme: _textTheme,
-
       ),
       home: const SplashScreen(),
     );

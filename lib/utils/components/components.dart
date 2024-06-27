@@ -56,19 +56,22 @@ Widget button({
   required String text,
   required void Function() onPressed,
   bool isEnabled = true,
-}) =>
-    GestureDetector(
-      onTap: () {
-        if (isEnabled) onPressed();
-      },
-      child: Container(
-        width: double.infinity,
-        height: 50,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: isEnabled ? Theme.of(context).colorScheme.primary : Colors.grey.shade300,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Text(text, style: Theme.of(context).textTheme.bodyLarge?.copyWith(color: Colors.white)),
+}) {
+  final theme = Theme.of(context);
+
+  return GestureDetector(
+    onTap: () {
+      if (isEnabled) onPressed();
+    },
+    child: Container(
+      width: double.infinity,
+      height: 50,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: isEnabled ? theme.colorScheme.primary : Colors.grey.shade300,
+        borderRadius: BorderRadius.circular(10),
       ),
-    );
+      child: Text(text, style: theme.textTheme.bodyLarge?.copyWith(color: Colors.white)),
+    ),
+  );
+}

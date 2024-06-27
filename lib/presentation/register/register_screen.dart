@@ -83,7 +83,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Future<void> onRegisterPressed() async {
     if (passwordController.text.trim() != confirmPasswordController.text.trim()) {
-      SnackBarService.showFlushBar(context: context, message: 'Password and confirm password must be the same');
+      SnackBarService.showSnackBar(context, 'Password and confirm password must be the same');
       return;
     }
 

@@ -39,5 +39,5 @@ class ContactDataFb {
     return "$name;$phone;$imagePath";
   }
 
-  ContactDb toDb() => ContactDb(userId: PrefHelper.getID(), name: name, phone: phone, id: int.parse(id));
+  ContactDb toDb({int? id}) => ContactDb(userId: PrefHelper.getID(), name: name, phone: phone, id: id);
 }

@@ -50,11 +50,11 @@ class RepositoryV3 {
   }
 
   Future<bool> deleteContact(ContactDataFb contact) async {
-    return await _dbHelper.deleteContact(contact.toDb());
+    return await _dbHelper.deleteContact(contact.toDb(id: int.parse(contact.id)));
   }
 
   Future<bool> updateContact(ContactDataFb contact) async {
-    return await _dbHelper.updateContact(contact.toDb());
+    return await _dbHelper.updateContact(contact.toDb(id: int.parse(contact.id)));
   }
 
   Future<List<ContactDataFb>> getContacts() async => (await _dbHelper.getContacts()).map((e) => e.toFb()).toList();

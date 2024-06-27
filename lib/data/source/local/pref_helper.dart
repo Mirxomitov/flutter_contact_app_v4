@@ -12,11 +12,11 @@ class PrefHelper {
 
   static int getID() => _pref.getInt(_USER_ID) ?? 0;
 
-  static void setID(int id) => _pref.setInt(_USER_ID, id);
+  static Future<void> setID(int id) async => await _pref.setInt(_USER_ID, id);
 
   // Define to first screen
   static NavigationEnum firstScreen() {
-    if (_pref.getString(PrefHelper._USER_ID) != null) {
+    if (_pref.getInt(PrefHelper._USER_ID) != null) {
       return NavigationEnum.main;
     }
     return NavigationEnum.login;

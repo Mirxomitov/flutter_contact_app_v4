@@ -23,13 +23,13 @@ class DbHelper {
             password TEXT NOT NULL
           )
           ''');
+
         await db.execute('''
           CREATE TABLE $contactsTable (
             id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             phone TEXT NOT NULL,
-            userId INTEGER NOT NULL,
-            FOREIGN KEY(userId) REFERENCES $usersTable(id)
+            userId INTEGER NOT NULL
           )
           ''');
       },
@@ -44,7 +44,10 @@ class DbHelper {
       whereArgs: [email, password],
     );
 
-    print('DbHelper.login.result = $result');
+    if (result.isEmpty) return false;
+
+    int id = UserDb.fromJson(result.first).id!;
+    await PrefHelper.setID(id);
 
     return result.isNotEmpty;
   }
@@ -58,17 +61,7 @@ class DbHelper {
       whereArgs: [email],
     );
 
-    // TODO not bool but message 'email incorrect'
     if (result.isNotEmpty) return false;
-
-    final result2 = await db.query(
-      usersTable,
-      where: 'email = ? AND password = ?',
-      whereArgs: [email, password],
-    );
-
-    // TODO not bool but message 'password incorrect'
-    if (result2.isNotEmpty) return false;
 
     final user = UserDb(email: email, password: password);
     int id = await db.insert(usersTable, user.toJson());
@@ -89,14 +82,11 @@ class DbHelper {
   }
 
   Future<bool> addContact(ContactDb data) async {
-    print('addContact $data');
     final db = await _getDb();
-    print('get db');
+    print('insert contact $data');
     db.insert(contactsTable, data.toJson());
 
-    print('insert contact');
-    print('id = id');
-    return false;
+    return true;
   }
 
   Future<bool> updateContact(ContactDb data) async {
