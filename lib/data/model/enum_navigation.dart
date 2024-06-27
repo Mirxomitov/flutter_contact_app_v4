@@ -1,0 +1,4 @@
+enum NavigationEnum {
+  login,
+  main,
+}

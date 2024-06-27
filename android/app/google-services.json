@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "1001110228870",
+    "firebase_url": "https://flutter-contacts-demo-default-rtdb.firebaseio.com",
+    "project_id": "flutter-contacts-demo",
+    "storage_bucket": "flutter-contacts-demo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001110228870:android:5cd2bbea899a4401cca607",
+        "android_client_info": {
+          "package_name": "com.example.contacts_bloc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgpb8jDKAqsjneOO9OAnMaIRNzvRC_omk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1001110228870:android:522cf5e76419003ecca607",
+        "android_client_info": {
+          "package_name": "com.example.contacts_v4"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgpb8jDKAqsjneOO9OAnMaIRNzvRC_omk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
