@@ -1,13 +1,21 @@
+import 'package:contacts_bloc/data/source/local/my_hive_helper.dart';
 import 'package:contacts_bloc/data/source/local/pref_helper.dart';
 import 'package:contacts_bloc/presentation/splash/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 
+import 'data/model/contact_hive.dart';
 import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await PrefHelper.init();
+  final dir = await getApplicationDocumentsDirectory();
+  Hive.init(dir.path);
+  Hive.registerAdapter(ContactHiveAdapter());
+  //await PrefHelper.init();
+  await MyHiveHelper.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

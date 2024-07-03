@@ -1,5 +1,5 @@
+import 'package:contacts_bloc/data/model/contact_hive.dart';
 import 'package:contacts_bloc/data/model/db/contact_db.dart';
-import 'package:contacts_bloc/data/source/local/pref_helper.dart';
 
 class ContactDataFb {
   final String name;
@@ -39,5 +39,7 @@ class ContactDataFb {
     return "$name;$phone;$imagePath";
   }
 
-  ContactDb toDb({int? id}) => ContactDb(userId: PrefHelper.getID(), name: name, phone: phone, id: id);
+  ContactDb toDb({int? id}) => ContactDb(/*userId: PrefHelper.getID(),*/ name: name, phone: phone, id: id);
+
+  ContactHive toHive({int? id}) => ContactHive(name: name, phone: phone);
 }

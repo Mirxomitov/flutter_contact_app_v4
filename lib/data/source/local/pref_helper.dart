@@ -1,31 +1,31 @@
 import 'package:contacts_bloc/data/model/enum_navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class PrefHelper {
-  static late final SharedPreferences _pref;
-
-  static init() async {
-    _pref = await SharedPreferences.getInstance();
-  }
-
-  static const String _USER_ID = 'userId';
-
-  static int getID() => _pref.getInt(_USER_ID) ?? 0;
-
-  static Future<void> setID(int id) async => await _pref.setInt(_USER_ID, id);
-
-  // Define to first screen
-  static NavigationEnum firstScreen() {
-    if (_pref.getInt(PrefHelper._USER_ID) != null) {
-      return NavigationEnum.main;
-    }
-    return NavigationEnum.login;
-  }
-
-  static void clear() {
-    _pref.clear();
-  }
-}
+// class PrefHelper {
+//   static late final SharedPreferences _pref;
+//
+//   static init() async {
+//     _pref = await SharedPreferences.getInstance();
+//   }
+//
+//   static const String _USER_ID = 'userId';
+//
+//   static int getID() => _pref.getInt(_USER_ID) ?? 0;
+//
+//   static Future<void> setID(int id) async => await _pref.setInt(_USER_ID, id);
+//
+//   // Define to first screen
+//   static NavigationEnum firstScreen() {
+//     if (_pref.getInt(PrefHelper._USER_ID) != null) {
+//       return NavigationEnum.main;
+//     }
+//     return NavigationEnum.login;
+//   }
+//
+//   static void clear() {
+//     _pref.clear();
+//   }
+// }
 
 /*  //----------------------
   // PRIVATE VARIABLES

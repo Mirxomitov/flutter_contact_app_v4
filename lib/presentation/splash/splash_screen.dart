@@ -1,14 +1,13 @@
 import 'dart:async';
 
 import 'package:contacts_bloc/blocs/login/login_bloc.dart';
-import 'package:contacts_bloc/domain/repository_v3.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../blocs/delete/delete_bloc.dart';
 import '../../blocs/main/main_bloc.dart';
-import '../../data/model/enum_navigation.dart';
+import '../../data/source/local/my_hive_helper.dart';
 import '../login/login_screen.dart';
 import '../main/main_screen.dart';
 
@@ -33,27 +32,20 @@ class _SplashScreenState extends State<SplashScreen> {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (context) {
-
-          return BlocProvider(
-            create: (context) => LoginBloc(),
-            child: LoginScreen(),
-          );
-
-          /*switch (RepositoryV3().firstScreen()) {
-            case NavigationEnum.login:
-              return BlocProvider(
-                create: (context) => LoginBloc(),
-                child: LoginScreen(),
-              );
-            case NavigationEnum.main:
-              return MultiBlocProvider(
-                providers: [
-                  BlocProvider(create: (context) => DeleteBloc()),
-                  BlocProvider(create: (context) => MainBloc()),
-                ],
-                child: const MainScreen(),
-              );
-          }*/
+          if (MyHiveHelper.getUserEmail().isEmpty) {
+            return BlocProvider(
+              create: (context) => LoginBloc(),
+              child: LoginScreen(),
+            );
+          } else {
+            return MultiBlocProvider(
+              providers: [
+                BlocProvider(create: (context) => DeleteBloc()),
+                BlocProvider(create: (context) => MainBloc()),
+              ],
+              child: const MainScreen(),
+            );
+          }
         },
       ),
     );

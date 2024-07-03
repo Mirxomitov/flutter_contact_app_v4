@@ -9,9 +9,13 @@ final class AddContactEvent extends MainEvent {
 }
 
 final class EditContactEvent extends MainEvent {
-  final ContactDataFb contactData;
+  final ContactDataFb newContactData;
+  final ContactDataFb oldContactData;
 
-  EditContactEvent({required this.contactData});
+  EditContactEvent({
+    required this.newContactData,
+    required this.oldContactData,
+  });
 }
 
 final class DeleteContact extends MainEvent {

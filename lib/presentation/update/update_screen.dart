@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/model/firebase/contact_data_fb.dart';
 import '../../utils/components/components.dart';
+import '../../utils/components/phone_field.dart';
 
 class UpdateScreen extends StatefulWidget {
   final ContactDataFb contact;
@@ -17,6 +18,21 @@ class UpdateScreen extends StatefulWidget {
 class _UpdateScreenState extends State<UpdateScreen> {
   var userNameController = TextEditingController();
   var phoneController = TextEditingController();
+
+  @override
+  void initState() {
+    phoneController.text = widget.contact.phone;
+    userNameController.text = widget.contact.name;
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    userNameController.dispose();
+    phoneController.dispose();
+    super.dispose();
+  }
+
   var isPasswordVisible = false;
 
   @override
@@ -35,14 +51,9 @@ class _UpdateScreenState extends State<UpdateScreen> {
                 Image.asset('assets/icon_login.png', width: 120, height: 120),
                 const Spacer(),
                 const SizedBox(height: 20),
-                textField(hintText: "Username", fieldController: userNameController, defValue: widget.contact.name),
+                textField(hintText: "Username", fieldController: userNameController),
                 const SizedBox(height: 20),
-                textField(
-                  hintText: "Phone",
-                  fieldController: phoneController,
-                  defValue: widget.contact.phone,
-                  inputType: TextInputType.phone,
-                ),
+                PhoneField(fieldController: phoneController),
                 const Spacer(),
                 BlocConsumer<UpdateBloc, UpdateState>(
                   listener: (context, state) {
@@ -65,6 +76,26 @@ class _UpdateScreenState extends State<UpdateScreen> {
                       context: context,
                       text: "Update",
                       onPressed: () {
+                        // user name length should be at least 4
+                        if (userNameController.text.length < 4) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Name should be at least 4 characters'),
+                            ),
+                          );
+                          return;
+                        }
+
+                        // phone number length should be at least 12 and start with +998
+                        if (phoneController.text.length < 12 || !phoneController.text.startsWith('+998')) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Phone number should be at least 12 characters and start with +998'),
+                            ),
+                          );
+                          return;
+                        }
+
                         final contact = ContactDataFb(
                           id: widget.contact.id,
                           imagePath: widget.contact.imagePath,
@@ -74,7 +105,7 @@ class _UpdateScreenState extends State<UpdateScreen> {
 
                         print('Edited contact : $contact');
 
-                        context.read<UpdateBloc>().add(UpdateContactEvent(contact));
+                        context.read<UpdateBloc>().add(UpdateContactEvent(newContactData: contact, oldContactData: widget.contact));
                       },
                     );
                   },

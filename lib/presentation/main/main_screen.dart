@@ -1,5 +1,6 @@
 import 'package:contacts_bloc/blocs/main/main_bloc.dart';
-import 'package:contacts_bloc/domain/repository_v3.dart';
+import 'package:contacts_bloc/data/source/local/my_hive_helper.dart';
+import 'package:contacts_bloc/domain/repository_v4.dart';
 import 'package:contacts_bloc/presentation/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,7 +43,7 @@ class _MainScreenState extends State<MainScreen> {
                 onClickLogout(
                   context,
                   onLogout: () async {
-                    final res = await RepositoryV3().logout();
+                    final res = await RepositoryV4().logout();
                     print('ON onLogout CLICK res = $res');
 
                     if (!context.mounted) return;
@@ -54,7 +55,7 @@ class _MainScreenState extends State<MainScreen> {
                     );
                   },
                   onUnRegister: () async {
-                    final res = await RepositoryV3().unregister();
+                    final res = await RepositoryV4().unregister();
                     print('on unregister click res = $res');
 
                     if (!context.mounted) return;
@@ -74,7 +75,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
         title: Text(
-          'Contacts',
+          MyHiveHelper.userEmailBox.values.length.toString(),
           style: Theme.of(context).textTheme.titleLarge?.copyWith(
                 color: Colors.grey.shade500,
                 fontWeight: FontWeight.bold,
@@ -162,8 +163,7 @@ class _MainScreenState extends State<MainScreen> {
       MaterialPageRoute(builder: (context) => const AddScreen()),
     );
 
-    if (result != null && result) {
-      print('Muhriddin');
+    if (result != null && result && mounted) {
       BlocProvider.of<MainBloc>(context).add(LoadContactsEvent());
     }
   }

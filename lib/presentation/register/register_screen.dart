@@ -1,4 +1,5 @@
 import 'package:contacts_bloc/domain/repository_v3.dart';
+import 'package:contacts_bloc/domain/repository_v4.dart';
 import 'package:contacts_bloc/presentation/main/main_screen.dart';
 import 'package:contacts_bloc/utils/components/snacbar_with_text.dart';
 import 'package:flutter/gestures.dart';
@@ -90,7 +91,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final isConfirmed = Confirmation.confirmationWithSnackbar(emailController, passwordController, context);
     if (!isConfirmed) return;
 
-    final isRegistered = await RepositoryV3().register(
+    final isRegistered = await RepositoryV4().register(
       email: emailController.text,
       password: passwordController.text,
       name: userNameController.text,

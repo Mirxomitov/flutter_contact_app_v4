@@ -1,6 +1,5 @@
 import 'package:contacts_bloc/data/model/firebase/contact_data_fb.dart';
-import 'package:contacts_bloc/domain/repository_v2.dart';
-import 'package:contacts_bloc/domain/repository_v3.dart';
+import 'package:contacts_bloc/domain/repository_v4.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'update_event.dart';
@@ -11,9 +10,10 @@ class UpdateBloc extends Bloc<UpdateEvent, UpdateState> {
     on<UpdateContactEvent>((event, emit) async {
       emit(UpdateLoading());
       try {
-        print('UpdateBloc.UpdateContactEvent.event.contactDataFb = ${event.contactDataFb}');
+        print('UpdateBloc.UpdateContactEvent.event.newContactData = ${event.newContactData}');
+        print('UpdateBloc.UpdateContactEvent.event.oldContactData = ${event.oldContactData}');
 
-        await RepositoryV3().updateContact(event.contactDataFb);
+        RepositoryV4().updateContact(newContact: event.newContactData, oldContact: event.oldContactData);
         emit(UpdateSuccess());
       } catch (e) {
         emit(UpdateFailure());

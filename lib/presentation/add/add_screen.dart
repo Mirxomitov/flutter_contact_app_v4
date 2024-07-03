@@ -1,4 +1,5 @@
 import 'package:contacts_bloc/data/model/firebase/contact_data_fb.dart';
+import 'package:contacts_bloc/utils/components/phone_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,7 +35,7 @@ class _AddScreenState extends State<AddScreen> {
                 const SizedBox(height: 20),
                 textField(hintText: "Name", fieldController: userNameController),
                 const SizedBox(height: 20),
-                textField(hintText: "Phone", fieldController: phoneController, inputType: TextInputType.phone),
+                PhoneField(fieldController: phoneController),
                 const Spacer(),
                 BlocConsumer<AddBloc, AddState>(
                   listener: (context, state) {
@@ -67,7 +68,26 @@ class _AddScreenState extends State<AddScreen> {
                       context: context,
                       text: "Add",
                       onPressed: () {
-                        print('on Press add');
+                        // user name length should be at least 4
+                        if (userNameController.text.length < 4) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Name should be at least 4 characters'),
+                            ),
+                          );
+                          return;
+                        }
+
+                        // phone number length should be at least 12 and start with +998
+                        if (phoneController.text.length < 12 || !phoneController.text.startsWith('+998')) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Phone number should be at least 12 characters and start with +998'),
+                            ),
+                          );
+                          return;
+                        }
+
                         context.read<AddBloc>().add(
                           AddContactEvent(
                             contactData: ContactDataFb(

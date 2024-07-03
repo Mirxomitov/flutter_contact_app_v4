@@ -3,7 +3,8 @@ part of 'update_bloc.dart';
 sealed class UpdateEvent {}
 
 final class UpdateContactEvent extends UpdateEvent {
-  final ContactDataFb contactDataFb;
+  final ContactDataFb newContactData;
+  final ContactDataFb oldContactData;
 
-  UpdateContactEvent(this.contactDataFb);
+  UpdateContactEvent({required this.newContactData, required this.oldContactData});
 }

@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/repository_v3.dart';
+import '../../domain/repository_v4.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -10,7 +11,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<LoginUserEvent>((event, emit) async {
       emit(state.copyWith(status: LoginStatus.loading));
 
-      final res = await RepositoryV3().login(event.email, event.password);
+      final res = await RepositoryV4().login(event.email, event.password);
       res ? emit(state.copyWith(status: LoginStatus.success))
           : emit(
               state.copyWith(status: LoginStatus.failure),
